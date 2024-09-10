@@ -21,7 +21,7 @@
             <div class="el-upload__text" v-if="uploadMethod === 'drag'">拖拽 或 <em>点击上传</em></div>
             <div class="el-upload__text" v-else>复制 <em>粘贴</em> 上传</div>
             <template #tip>
-                <div class="el-upload__tip rainbow" style="padding-top: 45px;">支持多文件上传，支持图片和视频，不超过50MB</div>
+                <div class="el-upload__tip rainbow" style="margin-top: 10px; font-size: 16px"><span style="color: red; font-weight: bold; font-size: 18px">请注意:</span> 本图床支持图片,视频以及多文件上传，文件大小不得超过50MB，否则将会导致上传失败!</div>
             </template>
         </el-upload>
         <el-card class="upload-list-card" :class="{'upload-list-busy': fileList.length}">

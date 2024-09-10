@@ -3,9 +3,21 @@
         <img id="bg1" class="background-image1" alt="Background Image"/>
         <img id="bg2" class="background-image2" alt="Background Image"/>
         <div class="toolbar">
-          <el-button round color="#626aef" @click="changeUploadMethod"><el-icon><UploadFilled /></el-icon>&nbsp;上传方式</el-button>
-          <el-button round type="success" @click="openUrlDialog"><el-icon><Link /></el-icon>&nbsp;链接格式</el-button>
-          <el-button round type="primary" @click="handleManage"><el-icon><UserFilled /></el-icon>&nbsp;管理页面</el-button>
+          <el-tooltip content="上传方式" placement="left">
+                <el-button class="toolbar-button" size="large" color="#626aef" @click="changeUploadMethod" circle>
+                    <el-icon size="large"><UploadFilled /></el-icon>
+                </el-button>
+            </el-tooltip>
+            <el-tooltip content="链接格式" placement="left">
+                <el-button class="toolbar-button" size="large" type="success" @click="openUrlDialog" circle>
+                    <el-icon size="large"><Connection /></el-icon>
+                </el-button>
+            </el-tooltip>
+            <el-tooltip content="管理页面" placement="left">
+                <el-button class="toolbar-button" size="large" type="primary" @click="handleManage" circle>
+                    <el-icon size="large"><UserFilled /></el-icon>
+                </el-button>
+            </el-tooltip>
         </div>
         <div class="header">
             <a href="https://github.com/MarSeventh/CloudFlare-ImgBed">
@@ -125,16 +137,17 @@ export default {
 <style scoped>
 .toolbar {
     display: flex;
-    position: relative;
+    flex-direction: column;
+    position: fixed;
     justify-content: center;
-    bottom: -20vh;
-    margin-top: 10px;
+    bottom: 40vh;
+    right: 1vw;
     z-index: 10000;
 }
 .toolbar-button {
     border: none;
     transition: all 0.3s ease;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     margin-left: 0;
 }
 .toolbar-button:hover {
