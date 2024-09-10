@@ -3,35 +3,17 @@
         <img id="bg1" class="background-image1" alt="Background Image"/>
         <img id="bg2" class="background-image2" alt="Background Image"/>
         <div class="toolbar">
-            <el-tooltip content="上传方式" placement="left">
-                <el-button class="toolbar-button" size="large" type="info" @click="changeUploadMethod" circle>
-                    <el-icon size="large"><Refresh /></el-icon>
-                </el-button>
-            </el-tooltip>
-            <el-tooltip content="链接格式" placement="left">
-                <el-button class="toolbar-button" size="large" type="success" @click="openUrlDialog" circle>
-                    <el-icon size="large"><Connection /></el-icon>
-                </el-button>
-            </el-tooltip>
-            <el-tooltip content="管理页面" placement="left">
-                <el-button class="toolbar-button" size="large" type="primary" @click="handleManage" circle>
-                    <el-icon size="large"><Tools /></el-icon>
-                </el-button>
-            </el-tooltip>
-            <el-tooltip content="退出登录" placement="left">
-                <el-button class="toolbar-button" size="large" type="danger" @click="handleLogout" circle>
-                    <el-icon size="large"><Close /></el-icon>
-                </el-button>
-            </el-tooltip>
+          <el-button round color="#626aef" @click="changeUploadMethod"><el-icon><UploadFilled /></el-icon>&nbsp;上传方式</el-button>
+          <el-button round type="success" @click="openUrlDialog"><el-icon><Link /></el-icon>&nbsp;链接格式</el-button>
+          <el-button round type="primary" @click="handleManage"><el-icon><UserFilled /></el-icon>&nbsp;管理页面</el-button>
         </div>
         <div class="header">
             <a href="https://github.com/MarSeventh/CloudFlare-ImgBed">
-                <img class="logo" alt="Sanyue logo" :src="logoUrl"/>
+                <img class="logo" alt="AreYouOk logo" :src="logoUrl"/>
             </a> 
-            <h1><a class="main-title" href="https://github.com/MarSeventh/CloudFlare-ImgBed" target="_blank">{{ ownerName }}</a> ImgHub</h1>
+            <h1><a class="main-title" href="https://github.com/MarSeventh/CloudFlare-ImgBed" target="_blank">{{ ownerName }}</a> PicBed</h1>
         </div>
         <UploadForm :selectedUrlForm="selectedUrlForm" :uploadMethod="uploadMethod" class="upload"/>
-        <Footer/>
         <el-dialog title="选择复制链接格式" v-model="showUrlDialog" width="40%" :show-close="false">
             <el-radio-group v-model="selectedUrlForm">
                 <el-radio value="url">原始链接</el-radio>
@@ -48,11 +30,9 @@
 
 <script>
 import UploadForm from '@/components/UploadForm.vue'
-import Footer from '@/components/Footer.vue'
 import { ref } from 'vue'
-import cookies from 'vue-cookies'
 import { mapGetters } from 'vuex'
-
+import { Refresh, UploadFilled, UserFilled } from '@element-plus/icons-vue'
 export default {
     name: 'UploadHome',
     data() {
@@ -67,7 +47,7 @@ export default {
     computed: {
         ...mapGetters(['userConfig', 'bingWallPapers']),
         ownerName() {
-            return this.userConfig?.ownerName || 'Sanyue'
+            return this.userConfig?.ownerName || 'AreYouOk'
         },
         logoUrl() {
             return this.userConfig?.logoUrl || require('../assets/logo.png')
@@ -126,8 +106,7 @@ export default {
         }
     },
     components: {
-        UploadForm,
-        Footer
+        UploadForm
     },
     methods: {
         handleManage() {
@@ -138,11 +117,6 @@ export default {
         },
         changeUploadMethod() {
             this.uploadMethod = this.uploadMethod === 'drag' ? 'paste' : 'drag'
-        },
-        handleLogout() {
-            cookies.remove('authCode')
-            this.$router.push('/login')
-            this.$message.success('已退出登录~')
         }
     }
 }
@@ -150,13 +124,12 @@ export default {
 
 <style scoped>
 .toolbar {
-    position: fixed;
-    bottom: 8vh;
-    right: 1.5vw;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 100;
+    position: relative;
+    justify-content: center;
+    bottom: -20vh;
+    margin-top: 10px;
+    z-index: 10000;
 }
 .toolbar-button {
     border: none;

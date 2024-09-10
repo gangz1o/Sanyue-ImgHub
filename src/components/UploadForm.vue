@@ -21,7 +21,7 @@
             <div class="el-upload__text" v-if="uploadMethod === 'drag'">拖拽 或 <em>点击上传</em></div>
             <div class="el-upload__text" v-else>复制 <em>粘贴</em> 上传</div>
             <template #tip>
-                <div class="el-upload__tip">支持多文件上传，支持图片和视频，不超过20MB</div>
+                <div class="el-upload__tip rainbow" style="padding-top: 45px;">支持多文件上传，支持图片和视频，不超过50MB</div>
             </template>
         </el-upload>
         <el-card class="upload-list-card" :class="{'upload-list-busy': fileList.length}">
@@ -255,12 +255,12 @@ methods: {
     beforeUpload(file) {
         return new Promise((resolve, reject) => {
             const isLt5M = file.size / 1024 / 1024 < 5
-            const isLt20M = file.size / 1024 / 1024 < 20
+            const isLt50M = file.size / 1024 / 1024 < 50
             if (!isLt5M && file.type.includes('image')) {
                 //尝试压缩图片
                 imageConversion.compressAccurately(file, 4096).then((res) => {
-                    //如果压缩后仍大于20MB，则不上传
-                    if (res.size / 1024 / 1024 > 20) {
+                    //如果压缩后仍大于50MB，则不上传
+                    if (res.size / 1024 / 1024 > 50) {
                         this.$message.error(file.name + '压缩后文件过大，无法上传!')
                         reject('文件过大')
                     }
@@ -285,7 +285,7 @@ methods: {
                     this.$message.error(file.name + '文件过大且压缩失败，无法上传!')
                     reject(err)
                 })
-            } else if (isLt20M) {
+            } else if (isLt50M) {
                 this.uploading = true
                 const fileUrl = URL.createObjectURL(file)
                 this.fileList.push({
@@ -472,7 +472,7 @@ methods: {
     }
     50% {
         box-shadow: 0 0 10px 5px #409EFF;
-        opacity: 0.8;
+        opacity: 0.6;
     }
 }
 .upload-form {
@@ -484,19 +484,19 @@ methods: {
 .upload-list-card {
     width: 55vw;
     height: 7vh;
-    margin-top: 10px;
+    margin-top: -10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 15px;
-    opacity: 0.8;
+    opacity: 0.6;
     background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
 }
 .upload-list-container {
     width: 55vw;
-    height: 7vh;
+    height:6vh;
 }
 .upload-list-card.upload-list-busy {
     height: 35vh;
@@ -563,7 +563,7 @@ methods: {
     height: 45vh;
     border-radius: 15px;
     border: 3px dashed #409EFF;
-    opacity: 0.7;
+    opacity: 0.6;
     background-color: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
@@ -598,5 +598,21 @@ methods: {
 .upload-list-dashboard-title {
     font-size: medium;
     font-weight: bold;
+}
+.rainbow {
+  background: linear-gradient(135deg, #9b5de5, #f15bb5, #fee440, #00f5d4, #00bbf9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow_animation 4s cubic-bezier(0.4, 0, 1, 1) infinite;
+  background-size: 300% 100%;
+}
+@keyframes rainbow_animation {
+  0%,100% {
+    background-position: 0 50%;
+  }
+  20% {
+    background-position: 100% 50%;
+  }
 }
 </style>
